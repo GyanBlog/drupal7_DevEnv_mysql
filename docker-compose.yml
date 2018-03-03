@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  drupal7:
+    image: drupal:7.57-apache
+    ports:
+      - 8086:80
+    volumes:
+      - LOCAL_SITES_FOLDER:/var/www/html/sites
+    environment:
+      - "MYSQL_ROOT_PASSWORD=MY_MYSQL_PASSWORD"
+    restart: always
+
+  mariadb:
+    image: mariadb
+    environment:
+      - "MYSQL_ROOT_PASSWORD=MY_MYSQL_PASSWORD"
+    volumes:
+      - LOCAL_MYSQL_FOLDER:/var/lib/mysql
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8084:80
+    environment:
+      - "PMA_HOST=mariadb"
